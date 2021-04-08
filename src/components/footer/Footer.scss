@@ -1,0 +1,27 @@
+@import "../../_color.scss";
+
+.footer {
+  background-color: $color-blue;
+  padding: 3rem;
+  color: $secondary-txt;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.footer__counter {
+  div {
+    margin-right: 1rem;
+  }
+
+  h6 {
+    font-size: 1.15rem;
+  }
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

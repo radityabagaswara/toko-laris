@@ -1,0 +1,31 @@
+.navbar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.199) !important;
+  min-height: 70px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  flex-basis: auto;
+}
+
+.navbar__inner {
+  display: flex;
+  justify-content: space-between;
+  padding: 1px 0;
+  align-items: center;
+}
+
+.navbar__content {
+  > div {
+    margin: 0 5px;
+  }
+
+  .hover:hover {
+    cursor: pointer;
+  }
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}

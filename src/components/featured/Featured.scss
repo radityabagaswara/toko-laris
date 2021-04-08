@@ -1,0 +1,17 @@
+@import "../../_color.scss";
+
+.featured {
+  padding: 1rem;
+
+  .featured__content {
+    min-width: 80%;
+    max-width: 80%;
+    margin: auto;
+    padding: 1rem;
+
+    @media (max-width: 375px) {
+      min-width: 100%;
+      max-width: 100%;
+    }
+  }
+}

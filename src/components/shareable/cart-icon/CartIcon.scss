@@ -1,0 +1,29 @@
+@import "../../../_color.scss";
+
+.carticon {
+  position: relative;
+}
+
+.carticon__number {
+  &.hidden {
+    display: none;
+  }
+
+  display: block;
+  position: absolute;
+  background: $primary-txt;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  top: -5px;
+  right: -6px;
+}
+
+.carticon__number small {
+  margin: 0;
+  color: #fff;
+  font-size: 12px;
+}

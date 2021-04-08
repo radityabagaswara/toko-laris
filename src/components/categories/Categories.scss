@@ -1,0 +1,16 @@
+.categories__item {
+  width: 300px;
+  height: 80px;
+  border: 1px solid#ccc;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 12px;
+
+  color: #000;
+  h5 {
+    font-weight: bold;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}

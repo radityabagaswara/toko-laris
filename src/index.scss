@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+@import "./_color.scss";
+
+body {
+  font-family: "Nunito", sans-serif !important;
+  color: #78798b;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  letter-spacing: 0.05rem;
+}
+
+.text-primary {
+  color: $primary-txt !important;
+}
+
+.text-secondary {
+  color: $secondary-txt !important;
+}
+
+.text-blue {
+  color: $color-blue;
+}
+.text-black {
+  color: #212121;
+}
+
+.btn-primary {
+  &:focus {
+    background-color: darken($primary-txt, 10%);
+    box-shadow: none;
+  }
+  background-color: $primary-txt;
+  color: #fff;
+  border-color: $primary-txt;
+}
+
+.btn-primary:hover {
+  background-color: darken($primary-txt, 10%);
+  color: #fff;
+  border-color: $primary-txt;
+}
+
+.btn-secondary {
+  &:focus {
+    background-color: $primary-txt;
+    box-shadow: none;
+  }
+  background-color: #fff;
+  color: $primary-txt;
+  border-color: $secondary-txt;
+}
+
+.btn-secondary:hover {
+  background-color: $primary-txt;
+  color: #fff;
+  border-color: $secondary-txt;
+}
+
+.form-control {
+  padding: 0.5rem;
+}
+
+.form-control:focus {
+  border-color: $primary-txt;
+  box-shadow: unset;
+}
+
+a {
+  color: $primary-txt;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $secondary-txt;
+  cursor: pointer;
+}

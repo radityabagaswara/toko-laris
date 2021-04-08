@@ -1,0 +1,33 @@
+@import "../../_color.scss";
+
+.login {
+  margin: 5rem auto;
+  min-height: 70vh;
+}
+
+.login__wrapper {
+  margin-top: 5rem;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+
+  .password {
+    display: flex;
+    align-items: center;
+
+    .hover {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.login-button::after {
+  content: "";
+  border: 2px solid $color-blue;
+  width: 70px;
+  margin: 60px auto;
+  display: block;
+}

@@ -1,0 +1,75 @@
+@import "../../_color.scss";
+
+.product-detail {
+  min-height: 80vh;
+  margin: 4rem 0;
+  ul {
+    list-style-type: none;
+    padding-inline-start: 0 !important;
+    li {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0.3rem 0;
+    }
+    strong {
+      width: 75px;
+      max-width: 25%;
+    }
+  }
+}
+
+.search__wrapper {
+  background: $color-blue;
+  padding: 3rem 0;
+}
+
+.product-detail__image {
+  max-width: 400px;
+  max-height: 400px;
+}
+
+.product-detail__image img {
+  max-width: 400px;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.product-detail__qty {
+  .btn,
+  .detail__qty__counter {
+    padding: 1rem;
+  }
+
+  .btn:focus {
+    border: 1px solid $secondary-txt;
+    box-shadow: unset;
+  }
+
+  .btn-minus {
+    border-top-right-radius: unset !important;
+    border-bottom-right-radius: unset !important;
+  }
+
+  .btn-plus {
+    border-top-left-radius: unset !important;
+    border-bottom-left-radius: unset !important;
+  }
+
+  .product-detail__qty__counter {
+    border-top: 1px solid $secondary-txt;
+    border-bottom: 1px solid $secondary-txt;
+    border-radius: unset !important;
+    padding: 1rem 2rem;
+  }
+}
+
+.product-detail__description {
+  text-align: justify;
+}
+
+.btn-action {
+  &:hover {
+    color: $primary-txt;
+    cursor: pointer;
+  }
+}
