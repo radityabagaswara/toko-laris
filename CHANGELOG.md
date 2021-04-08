@@ -67,3 +67,4 @@
 ## [DEV 0.5] - 08-04-2021
 
 - Connect Login and check auth backend/frontend
+- Navbar login functionality
