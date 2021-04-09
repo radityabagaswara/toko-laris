@@ -15,6 +15,22 @@ const path = require("path");
 require("dotenv").config();
 
 module.exports = async (app, db) => {
+  app.get("/validAdmin", authenticateToken, async (req, res) => {
+    db.query(
+      "SELECT type FROM user WHERE id = ?",
+      [req.userID],
+      (err, rows) => {
+        if (err) {
+          res.sendStatus(403);
+          return console.error(err);
+        }
+        if (rows.length < 1) return res.sendStatus(403);
+        if (rows[0].type == "ADMIN") return res.sendStatus(200);
+        res.sendStatus(403);
+      }
+    );
+  });
+
   app.post("/register", async (req, res) => {
     const schema = Joi.object({
       name: Joi.string().required(),
@@ -71,14 +87,15 @@ module.exports = async (app, db) => {
       }
     );
   });
-  app.get("/v2", async (req, res) => {
+
+  app.post("/v2", async (req, res) => {
     const refreshToken = req.body.r_t;
     const accessToken = req.body.a_t;
     if (refreshToken == null) return res.sendStatus(403);
 
     db.query(
-      "SELECT * FROM user_token WHERE r_token = ? AND a_token = ?",
-      [refreshToken, accessToken],
+      "SELECT * FROM user_token WHERE r_token = ?",
+      [refreshToken],
       async (err, rows) => {
         if (err) {
           res.sendStatus(500);
@@ -86,11 +103,11 @@ module.exports = async (app, db) => {
         }
         if (rows.length < 1) return res.sendStatus(403);
 
-        if (!verifyRefreshToken) return res.sendStatus(403);
         const test = await fs.readFileSync(
           path.join(__dirname, "..", "jwtRS256-refresh.key.pub")
         );
-        return jwtoken.verify(
+
+        jwtoken.verify(
           refreshToken,
           test.toString(),
           {
@@ -114,6 +131,7 @@ module.exports = async (app, db) => {
       }
     );
   });
+
   app.post("/login", async (req, res) => {
     const schema = Joi.object({
       email: Joi.string().required(),
@@ -132,7 +150,7 @@ module.exports = async (app, db) => {
 
     if (pwd.length < 1) return res.sendStatus(404);
     if (await ShaDecrypt(value.value.password, pwd[0].password)) {
-      const token = crypto.randomBytes(512).toString("hex");
+      const token = crypto.randomBytes(32).toString("hex");
 
       const aToken = (await generateAccessToken({ token: token })).toString();
       const rToken = (await generateRefreshToken({ token: token })).toString();

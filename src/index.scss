@@ -61,7 +61,8 @@ h5 {
   border-color: $secondary-txt;
 }
 
-.form-control {
+.form-control,
+.input-group-text {
   padding: 0.5rem;
 }
 

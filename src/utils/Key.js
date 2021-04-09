@@ -19,3 +19,9 @@ exports.getDataKey = (ar) => {
   const d = JSON.parse(localStorage.getItem("d"));
   return d;
 };
+
+exports.resetKey = () => {
+  localStorage.setItem("a-t", null);
+  localStorage.setItem("r-t", null);
+  localStorage.setItem("d", null);
+};

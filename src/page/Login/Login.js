@@ -44,6 +44,11 @@ class Login extends React.Component {
             timer: 2500,
           });
           setKey(resp.data.at, resp.data.rt);
+          localStorage.setItem(
+            "d",
+            JSON.stringify({ email: resp.data.email, name: resp.data.name })
+          );
+          window.location.href = "/";
         }
       })
       .catch((err) => {

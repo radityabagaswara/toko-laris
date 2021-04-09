@@ -9,6 +9,8 @@ import Products from "./page/products/Products";
 import ProductDetails from "./page/product-details/ProductDetails";
 import Login from "./page/Login/Login";
 import Register from "./page/register/Register";
+import Logout from "./page/Logout";
+import AddProduct from "./page/AddProduct/AddProduct";
 ReactDOM.render(
   <React.StrictMode>
     <App />
@@ -17,9 +19,7 @@ ReactDOM.render(
         <Route path="/catalog">
           <Products />
         </Route>
-        <Route path="/product/:id">
-          <ProductDetails />
-        </Route>
+        <Route path="/product/:id" component={ProductDetails} />
 
         <Route path="/login">
           <Login />
@@ -28,6 +28,15 @@ ReactDOM.render(
         <Route path="/register">
           <Register />
         </Route>
+
+        <Route path="/logout">
+          <Logout />
+        </Route>
+
+        <Route path="/admin/products/add">
+          <AddProduct />
+        </Route>
+
         <Route path="/">
           <Homepage />
         </Route>

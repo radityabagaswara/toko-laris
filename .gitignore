@@ -5,6 +5,7 @@
 /server/jwtRS256.key
 /server/jwtRS256.key.pub
 /server/.env
+/server/public/product-images
 /node_modules
 /.pnp
 .pnp.

@@ -4,6 +4,7 @@ import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
 import CatalogItem from "../../components/shareable/catalog-item/CatalogItem";
 import Search from "../../components/shareable/search/Search";
+import API from "../../utils/API";
 import "./Products.scss";
 
 class Products extends Component {
@@ -11,6 +12,8 @@ class Products extends Component {
     super(props);
     this.state = {
       sort: {},
+      produk: null,
+      kategori: null,
       sortItem: [
         { value: "Popular", text: "🔥 Popular" },
         { value: "Newest", text: "👶 Newest" },
@@ -23,8 +26,47 @@ class Products extends Component {
   componentDidMount = () => {
     window.scrollTo(0, 0);
     this.setState({ sort: this.state.sortItem[0] });
+    API.get("/produk").then((res) => {
+      if (res.status == 200) {
+        this.setState({ produk: res.data });
+      }
+    });
+
+    API.get("/kategori").then((res) => {
+      if (res.status == 200) {
+        this.setState({ kategori: res.data });
+      }
+    });
   };
 
+  renderProduct = () => {
+    let item = [];
+    this.state.produk.forEach((e) => {
+      item.push(
+        <div className="col-md-2">
+          <CatalogItem
+            image={`http://localhost:4320/product-images/${e.image}`}
+            title={e.name}
+            price={e.price}
+            reviews={300}
+          />
+        </div>
+      );
+    });
+    return item;
+  };
+
+  renderKategori = () => {
+    let item = [];
+    this.state.kategori.forEach((e) => {
+      item.push(
+        <div className="col-md-2 categories__item">
+          <h5>{e.name}</h5>
+        </div>
+      );
+    });
+    return item;
+  };
   render() {
     return (
       <>
@@ -36,56 +78,13 @@ class Products extends Component {
           </div>
           <Search />
           <h4 className="text-blue mt-5">Categories</h4>
-          <Categories />
+          <div className="categories">
+            <div className="row align-items-center">
+              {this.state.kategori != null ? this.renderKategori() : ""}
+            </div>
+          </div>
           <div className="row mt-5">
-            <div className="col-md-3">
-              <CatalogItem
-                image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-                title="STUDIO TROPIK DreamSetter"
-                price={59000}
-                reviews={300}
-              />
-            </div>
-            <div className="col-md-3">
-              <CatalogItem
-                image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-                title="STUDIO TROPIK DreamSetter"
-                price={59000}
-                reviews={300}
-              />
-            </div>
-            <div className="col-md-3">
-              <CatalogItem
-                image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-                title="STUDIO TROPIK DreamSetter"
-                price={59000}
-                reviews={300}
-              />
-            </div>
-            <div className="col-md-3">
-              <CatalogItem
-                image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-                title="STUDIO TROPIK DreamSetter"
-                price={59000}
-                reviews={300}
-              />
-            </div>
-            <div className="col-md-3">
-              <CatalogItem
-                image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-                title="STUDIO TROPIK DreamSetter"
-                price={59000}
-                reviews={300}
-              />
-            </div>
-            <div className="col-md-3">
-              <CatalogItem
-                image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-                title="STUDIO TROPIK DreamSetter"
-                price={59000}
-                reviews={300}
-              />
-            </div>
+            {this.state.produk != null ? this.renderProduct() : ""}
           </div>
         </div>
         <Footer />

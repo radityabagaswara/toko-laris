@@ -5,11 +5,21 @@ import Search from "../../components/shareable/search/Search";
 import "./ProductDetails.scss";
 import { FaCartPlus } from "react-icons/fa";
 import { AiFillHeart, AiOutlineShareAlt, AiOutlineHeart } from "react-icons/ai";
+import API from "../../utils/API";
 
 class ProductDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = { qty: 1 };
+    this.state = { data: null, qty: 1 };
+  }
+
+  componentDidMount() {
+    const data = { title: this.props.match.params.id.replaceAll("-", " ") };
+    API.post("/produkInfo", data).then((res) => {
+      if (res.status == 200) {
+        this.setState({ data: res.data });
+      }
+    });
   }
 
   qtyPlus = () => {
@@ -23,6 +33,7 @@ class ProductDetails extends Component {
   };
 
   render() {
+    if (this.state.data == null) return <></>;
     return (
       <>
         <Navbar />
@@ -40,10 +51,10 @@ class ProductDetails extends Component {
                   <a href="/catalog">Catalog</a>
                 </li>
                 <li class="breadcrumb-item">
-                  <a href="#">*category name</a>
+                  <a href="#">{this.state.data.category}</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                  *product name
+                  {this.state.data.produk_nama}
                 </li>
               </ol>
             </nav>
@@ -53,27 +64,30 @@ class ProductDetails extends Component {
                 <div className="product-detail__image mx-auto">
                   <img
                     className=""
-                    src="https://themehunk.com/wp-themes/almaira-shop-dark-scheme/wp-content/uploads/sites/89/2019/01/logo-11.jpg"
+                    src={`http://localhost:4320/product-images/${this.state.data.image}`}
                   />
                 </div>
               </div>
               <div className="col-md-6">
-                <h4 className="text-primary fw-bold">Nama Produk</h4>
-                <h6>Rp 120.000</h6>
+                <h4 className="text-primary fw-bold">
+                  {this.state.data.produk_nama}
+                </h4>
+                <h6>Rp. {this.state.data.price}</h6>
                 <div className="">
                   <hr />
                   <ul>
                     <li>
-                      <strong>Berat</strong> 600gr
+                      <strong>Berat</strong> {this.state.data.weight}gr
                     </li>
                     <li>
-                      <strong>Kategori</strong> *kategori
+                      <strong>Kategori</strong> {this.state.data.category}
                     </li>
                     <li>
-                      <strong>Brand</strong> *brand
+                      <strong>Brand</strong> {this.state.data.brand}
                     </li>
                     <li>
-                      <strong>Stok</strong> {"<"}10
+                      <strong>Stok</strong> {"< "}
+                      {this.state.data.qty}
                     </li>
                   </ul>
                 </div>
@@ -163,17 +177,7 @@ class ProductDetails extends Component {
                 aria-labelledby="nav-description-tab"
               >
                 <div class="mt-3 product-detail__description">
-                  Officia nostrud reprehenderit ut non ipsum fugiat. Et
-                  reprehenderit cillum et voluptate ullamco fugiat. Incididunt
-                  occaecat magna fugiat magna esse velit ex. Non ipsum magna
-                  nostrud quis consectetur labore. Et est anim commodo
-                  reprehenderit qui ut nisi enim. Mollit quis incididunt duis
-                  eiusmod ex. Minim velit sunt amet sint commodo enim eu duis
-                  qui laborum anim. Laborum dolore officia aute elit
-                  consectetur. Sunt adipisicing non nostrud dolor ex et do
-                  proident cillum Lorem minim reprehenderit commodo cupidatat.
-                  Mollit consequat sint non ea reprehenderit ullamco amet ut
-                  velit esse aliquip duis irure.
+                  {this.state.data.description}
                 </div>
               </div>
               <div

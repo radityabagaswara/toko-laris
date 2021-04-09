@@ -1,6 +1,7 @@
 import React from "react";
 import "./CatalogItem.scss";
 import { IoStar, IoStarOutline, IoStarHalf } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const CatalogItem = ({ title, image, price, rating = 3, reviews }) => {
   const renderStar = () => {
@@ -21,19 +22,21 @@ const CatalogItem = ({ title, image, price, rating = 3, reviews }) => {
   };
 
   return (
-    <div className="catalog__item shadow">
-      <img src={image} />
-      <div className="catalog__item__content">
-        <h6 className="text-primary fw-bold">{title}</h6>
-        <p className="fw-bold">Rp {price.toLocaleString()}</p>
-        <div className="text-primary">
-          {renderStar()}
-          <span className="ms-1">
-            <small>({reviews})</small>
-          </span>
+    <Link to={`/product/` + title.replaceAll(" ", "-")}>
+      <div className="catalog__item shadow">
+        <img src={image} />
+        <div className="catalog__item__content">
+          <h6 className="text-primary fw-bold">{title}</h6>
+          <p className="fw-bold">Rp {price.toLocaleString()}</p>
+          <div className="text-primary">
+            {renderStar()}
+            <span className="ms-1">
+              <small>({reviews})</small>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

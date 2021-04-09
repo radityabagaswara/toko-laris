@@ -72,9 +72,9 @@ const Navbar = (props) => {
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <Link class="dropdown-item" to="/logout">
                       Logout
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </>

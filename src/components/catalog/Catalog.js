@@ -1,7 +1,23 @@
 import CatalogItem from "../shareable/catalog-item/CatalogItem";
 import "./Catalog.scss";
 
-const Catalog = (props) => {
+const Catalog = ({ data }) => {
+  const renderItem = () => {
+    let item = [];
+    data.forEach((e) => {
+      item.push(
+        <div className="col-md-2">
+          <CatalogItem
+            image={`http://localhost:4320/product-images/${e.image}`}
+            title={e.name}
+            price={e.price}
+            reviews={300}
+          />
+        </div>
+      );
+    });
+    return item;
+  };
   return (
     <div className="catalog">
       <div className="catalog__header text-center">
@@ -17,65 +33,7 @@ const Catalog = (props) => {
           </select>
         </form>
       </div>
-      <div className="catalog__item__wrapper row">
-        <div className="col-md-2">
-          <CatalogItem
-            image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-            title="STUDIO TROPIK DreamSetter"
-            price={59000}
-            reviews={300}
-          />
-        </div>
-
-        <div className="col-md-2">
-          <CatalogItem
-            image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-            title="STUDIO TROPIK DreamSetter"
-            price={59000}
-            reviews={300}
-          />
-        </div>
-        <div className="col-md-2">
-          <CatalogItem
-            image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-            title="STUDIO TROPIK DreamSetter"
-            price={59000}
-            reviews={300}
-          />
-        </div>
-        <div className="col-md-2">
-          <CatalogItem
-            image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-            title="STUDIO TROPIK DreamSetter"
-            price={59000}
-            reviews={300}
-          />
-        </div>
-        <div className="col-md-2">
-          <CatalogItem
-            image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-            title="STUDIO TROPIK DreamSetter"
-            price={59000}
-            reviews={300}
-          />
-        </div>
-        <div className="col-md-2">
-          <CatalogItem
-            image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-            title="STUDIO TROPIK DreamSetter"
-            price={59000}
-            reviews={300}
-          />
-        </div>
-        <div className="col-md-2">
-          <CatalogItem
-            image="https://images.tokopedia.net/img/cache/300-square/VqbcmM/2021/2/22/4ea07e3f-369a-4441-91d2-6a5adb824158.jpg.webp?ect=4g"
-            title="STUDIO TROPIK DreamSetter"
-            price={59000}
-            reviews={300}
-          />
-        </div>
-      </div>
+      <div className="catalog__item__wrapper row">{renderItem()}</div>
     </div>
   );
 };

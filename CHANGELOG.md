@@ -68,3 +68,13 @@
 
 - Connect Login and check auth backend/frontend
 - Navbar login functionality
+
+## [DEV 0.6] - 09-04-2021
+
+- Finished Login page
+- Finished Register Page
+- Finished Add Product Page
+- Finished Homepage Catalog
+- Finished Catalog Page
+- Finished Product Detail Page
+- Added user permission (Admin/User)
