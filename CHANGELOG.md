@@ -78,3 +78,11 @@
 - Finished Catalog Page
 - Finished Product Detail Page
 - Added user permission (Admin/User)
+
+## [DEV 0.7] - 10-04-2021
+
+- Finished checkout
+- Finished Cart System
+- Finished Permissions System (Admin and User)
+- Finished Admin Homepage
+- Fnished checkout history
