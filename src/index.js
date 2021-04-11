@@ -10,7 +10,11 @@ import ProductDetails from "./page/product-details/ProductDetails";
 import Login from "./page/Login/Login";
 import Register from "./page/register/Register";
 import Logout from "./page/Logout";
-import AddProduct from "./page/AddProduct/AddProduct";
+import AdminHomepage from "./page/Admin/Homepage/AdminHomepage";
+import Checkout from "./page/checkout/Checkout";
+import AddProduct from "./page/Admin/AddProduct/AddProduct";
+import CheckoutHistory from "./page/checkout/History";
+import HistoryItem from "./page/checkout/HistoryItem";
 ReactDOM.render(
   <React.StrictMode>
     <App />
@@ -33,9 +37,12 @@ ReactDOM.render(
           <Logout />
         </Route>
 
-        <Route path="/admin/products/add">
-          <AddProduct />
-        </Route>
+        <Route path="/admin/products/add" component={AddProduct} />
+        <Route path="/admin" component={AdminHomepage} />
+        <Route path="/checkout/history/items/:id" component={HistoryItem} />
+        <Route path="/checkout/history" component={CheckoutHistory} />
+
+        <Route path="/checkout" component={Checkout} />
 
         <Route path="/">
           <Homepage />

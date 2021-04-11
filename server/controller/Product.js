@@ -19,8 +19,24 @@ module.exports = async (app, db) => {
   app.post("/produkInfo", (req, res) => {
     const title = req.body.title;
     db.query(
-      "SELECT p.name as produk_nama, p.description, p.id as produk_id, p.brand, p.price, p.qty, p.weight, p.image, c.id as category_id, c.name as category FROM product p INNER JOIN category c ON p.category_id = c.id WHERE p.name = ?",
+      "SELECT p.id as produk_id, p.name as produk_nama, p.description, p.id as produk_id, p.brand, p.price, p.qty, p.weight, p.image, c.id as category_id, c.name as category FROM product p INNER JOIN category c ON p.category_id = c.id WHERE p.name = ?",
       [title],
+      (err, rows) => {
+        if (err) {
+          console.error(err);
+          return res.sendstatus(500);
+        }
+        if (rows.length < 1) return res.sendStatus(404);
+        res.json(rows[0]);
+      }
+    );
+  });
+
+  app.get("/produkById", (req, res) => {
+    const id = req.query.id;
+    db.query(
+      "SELECT p.id as produk_id, p.name as produk_nama, p.description, p.id as produk_id, p.brand, p.price, p.qty, p.weight, p.image, c.id as category_id, c.name as category FROM product p INNER JOIN category c ON p.category_id = c.id WHERE p.id = ?",
+      [id],
       (err, rows) => {
         if (err) {
           console.error(err);
@@ -72,6 +88,7 @@ module.exports = async (app, db) => {
           res.sendStatus(500);
           return console.error(err);
         }
+        res.sendStatus(200);
       }
     );
   });

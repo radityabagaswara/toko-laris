@@ -79,7 +79,6 @@ module.exports = async (app, db) => {
         }
 
         if (rows.length < 1) return res.sendStatus(403);
-
         res.json({
           name: decryptAES(rows[0].name),
           email: decryptAES(rows[0].email),
@@ -94,7 +93,7 @@ module.exports = async (app, db) => {
     if (refreshToken == null) return res.sendStatus(403);
 
     db.query(
-      "SELECT * FROM user_token WHERE r_token = ?",
+      "SELECT t.a_token, t.r_token, u.token FROM user_token t INNER JOIN user u ON u.id = t.user_id WHERE r_token = ?",
       [refreshToken],
       async (err, rows) => {
         if (err) {
@@ -114,7 +113,9 @@ module.exports = async (app, db) => {
             algorithm: "RS256",
           },
           async (err, user) => {
-            const newToken = await generateAccessToken({ token: user.token });
+            const newToken = await generateAccessToken({
+              token: rows[0].token,
+            });
             db.query(
               "UPDATE user_token SET a_token = ? WHERE r_token = ?",
               [newToken, refreshToken],
@@ -128,6 +129,26 @@ module.exports = async (app, db) => {
             );
           }
         );
+      }
+    );
+  });
+
+  app.get("/getSelfCheckout", authenticateToken, async (req, res) => {
+    const user = req.userID;
+
+    db.query(
+      "SELECT name, phone_number, address FROM user WHERE id = ?",
+      [user],
+      (err, rows) => {
+        if (err || rows.length < 1) return res.sendStatus(403);
+
+        const data = {
+          name: decryptAES(rows[0].name),
+          phone_number: decryptAES(rows[0].phone_number),
+          address: decryptAES(rows[0].address),
+        };
+
+        res.json(data);
       }
     );
   });
@@ -153,7 +174,9 @@ module.exports = async (app, db) => {
       const token = crypto.randomBytes(32).toString("hex");
 
       const aToken = (await generateAccessToken({ token: token })).toString();
-      const rToken = (await generateRefreshToken({ token: token })).toString();
+      const rToken = (
+        await generateRefreshToken({ type: "refresh" })
+      ).toString();
 
       await db.query("DELETE FROM user_token WHERE user_id = ?", [pwd[0].id]);
       db.query(

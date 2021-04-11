@@ -4,13 +4,20 @@ import Navbar from "../../components/navbar/Navbar";
 import Search from "../../components/shareable/search/Search";
 import "./ProductDetails.scss";
 import { FaCartPlus } from "react-icons/fa";
+import { MdRemoveShoppingCart } from "react-icons/md";
 import { AiFillHeart, AiOutlineShareAlt, AiOutlineHeart } from "react-icons/ai";
+import {
+  isItemInCart,
+  deleteCartItem,
+  addCart,
+  getCart,
+} from "../../utils/Cart";
 import API from "../../utils/API";
 
 class ProductDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: null, qty: 1 };
+    this.state = { data: null, qty: 1, isInCart: false };
   }
 
   componentDidMount() {
@@ -18,11 +25,36 @@ class ProductDetails extends Component {
     API.post("/produkInfo", data).then((res) => {
       if (res.status == 200) {
         this.setState({ data: res.data });
+        if (isItemInCart(res.data.produk_id)) {
+          this.setState({ isInCart: true });
+          let dataCart = getCart();
+          dataCart.filter((x) => {
+            if (x.produk_id == res.data.produk_id) {
+              this.setState({ qty: x.qty });
+            }
+          });
+        }
       }
     });
   }
 
+  addToCart = () => {
+    if (this.state.isInCart) {
+      deleteCartItem(this.state.data.produk_id);
+    }
+    addCart({ produk_id: this.state.data.produk_id, qty: this.state.qty });
+    this.setState({ isInCart: true });
+  };
+
+  removeFromCart = () => {
+    if (this.state.isInCart) {
+      deleteCartItem(this.state.data.produk_id);
+      this.setState({ isInCart: false });
+    }
+  };
+
   qtyPlus = () => {
+    if (this.state.qty + 1 > this.state.data.qty) return;
     this.setState({ qty: this.state.qty + 1 });
   };
 
@@ -72,7 +104,7 @@ class ProductDetails extends Component {
                 <h4 className="text-primary fw-bold">
                   {this.state.data.produk_nama}
                 </h4>
-                <h6>Rp. {this.state.data.price}</h6>
+                <h6>Rp. {this.state.data.price.toLocaleString()}</h6>
                 <div className="">
                   <hr />
                   <ul>
@@ -115,9 +147,27 @@ class ProductDetails extends Component {
                   >
                     +
                   </button>
-                  <button className="btn btn-primary d-flex align-items-center ms-3">
-                    <FaCartPlus /> <span className="ms-2">Add to Cart</span>
+                  <button
+                    className="btn btn-primary d-flex align-items-center ms-3"
+                    onClick={this.addToCart}
+                  >
+                    <FaCartPlus />{" "}
+                    <span className="ms-2">
+                      {!this.state.isInCart ? "Add to Cart" : "Update Cart"}
+                    </span>
                   </button>
+
+                  {this.state.isInCart ? (
+                    <button
+                      className="btn btn-danger d-flex align-items-center ms-3"
+                      onClick={this.removeFromCart}
+                    >
+                      <MdRemoveShoppingCart />{" "}
+                      <span className="ms-2">Remove Cart</span>
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div className="mt-3 d-flex flex-rows flex-wrap">
                   <div

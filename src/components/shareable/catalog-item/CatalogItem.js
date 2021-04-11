@@ -3,7 +3,13 @@ import "./CatalogItem.scss";
 import { IoStar, IoStarOutline, IoStarHalf } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
-const CatalogItem = ({ title, image, price, rating = 3, reviews }) => {
+const CatalogItem = ({
+  title,
+  image,
+  price,
+  rating = Math.random() * 5 + 3,
+  reviews,
+}) => {
   const renderStar = () => {
     const star = [];
     for (let i = 1; i <= 5; i++) {

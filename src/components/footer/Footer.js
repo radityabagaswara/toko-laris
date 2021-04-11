@@ -13,7 +13,7 @@ const Footer = (props) => {
             </h3>
             <p className="text-secondary">
               Menyediakan berbagai macam kebutuhan rumah tangga. <br />
-              Sing penting laris cok!
+              Sing penting laris lur!
             </p>
             <div className="footer__counter mt-3">
               <div className="text-primary">

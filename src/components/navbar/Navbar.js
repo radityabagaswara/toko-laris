@@ -4,14 +4,27 @@ import CartIcon from "../shareable/cart-icon/CartIcon";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getDataKey } from "../../utils/Key";
+import { getCart } from "../../utils/Cart";
 
 const Navbar = (props) => {
   const [data, setData] = useState(null);
+  const [cart, setCart] = useState(0);
 
   useEffect(() => {
     if (getDataKey) {
       setData(getDataKey);
     }
+    if (getCart()) {
+      setCart(getCart().length);
+    }
+    setInterval(() => {
+      if (getDataKey) {
+        setData(getDataKey);
+      }
+      if (getCart()) {
+        setCart(getCart().length);
+      }
+    }, 1000);
   }, []);
 
   return (
@@ -32,15 +45,17 @@ const Navbar = (props) => {
           >
             <IoHeartOutline size="30px" />
           </div>
-          <div
-            className="hover"
-            data-bs-toggle="popover"
-            data-bs-trigger="hover focus"
-            data-bs-content="Cart!"
-            data-bs-placement="bottom"
-          >
-            <CartIcon size="30px" />
-          </div>
+          <Link to="/checkout">
+            <div
+              className="hover"
+              data-bs-toggle="popover"
+              data-bs-trigger="hover focus"
+              data-bs-content="Cart!"
+              data-bs-placement="bottom"
+            >
+              <CartIcon size="30px" items={cart} />
+            </div>
+          </Link>
           <div className="ms-4">
             {data == null ? (
               <Link to="/login" className="btn btn-primary">
@@ -62,14 +77,14 @@ const Navbar = (props) => {
                   aria-labelledby="dropdownuser"
                 >
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <Link class="dropdown-item" to="#">
                       Account
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <Link class="dropdown-item" to="/checkout/history">
                       Order Status
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <Link class="dropdown-item" to="/logout">

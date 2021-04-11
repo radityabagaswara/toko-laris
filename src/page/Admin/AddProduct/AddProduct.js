@@ -1,8 +1,9 @@
 import React from "react";
 import Swal from "sweetalert2";
-import Footer from "../../components/footer/Footer";
-import Navbar from "../../components/navbar/Navbar";
-import API from "../../utils/API";
+import { checkadmin, checkLogin } from "../../../utils/CheckLogin";
+import Footer from "../../../components/footer/Footer";
+import Navbar from "../../../components/navbar/Navbar";
+import API from "../../../utils/API";
 import "./AddProduct.scss";
 class AddProduct extends React.Component {
   constructor(props) {
@@ -21,7 +22,11 @@ class AddProduct extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const checkedLogin = await checkLogin();
+    const checkAdmin = await checkadmin();
+
+    if (!checkedLogin || !checkAdmin) return (window.location.href = "/");
     API.get("/kategori").then((res) => {
       console.log(res);
       if (res.status == 200) {

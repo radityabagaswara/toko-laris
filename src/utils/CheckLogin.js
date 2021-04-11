@@ -21,7 +21,7 @@ exports.checkLogin = async () => {
             })
               .then((res) => {
                 if (res.status == 200) {
-                  localStorage.setItem("r-t", res.data.at);
+                  localStorage.setItem("a-t", res.data.at);
                   resolve(true);
                 }
               })
@@ -38,6 +38,20 @@ exports.checkLogin = async () => {
               });
           }
         }
+      });
+  });
+};
+
+exports.checkadmin = async () => {
+  return new Promise((resolve, reject) => {
+    API.get("/validAdmin")
+      .then((res) => {
+        if (res.status == 200) {
+          resolve(true);
+        }
+      })
+      .catch((err) => {
+        resolve(false);
       });
   });
 };

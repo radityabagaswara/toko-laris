@@ -9,7 +9,7 @@ exports.generateAccessToken = async (user) => {
   );
   return jwtoken.sign(user, test.toString(), {
     algorithm: "RS256",
-    expiresIn: "30m",
+    expiresIn: "15m",
   });
 };
 
